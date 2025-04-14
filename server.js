@@ -33,7 +33,18 @@ app.get("/api/subcategories/:categoryId", (req, res) => {
   );
 });
 
-
+// Get duas by subcategory_id
+app.get("/api/duas/:subCategoryId", (req, res) => {
+  const { subCategoryId } = req.params;
+  db.all(
+    "SELECT * FROM dua WHERE subcat_id = ?",
+    [subCategoryId],
+    (err, rows) => {
+      if (err) return res.status(500).send(err.message);
+      res.json(rows);
+    }
+  );
+});
 
 app.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)
