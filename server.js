@@ -20,6 +20,20 @@ app.get("/api/categories", (req, res) => {
   });
 });
 
+// Get subcategories by category_id
+app.get("/api/subcategories/:categoryId", (req, res) => {
+  const { categoryId } = req.params;
+  db.all(
+    "SELECT * FROM sub_category WHERE cat_id = ?",
+    [categoryId],
+    (err, rows) => {
+      if (err) return res.status(500).send(err.message);
+      res.json(rows);
+    }
+  );
+});
+
+
 
 app.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)
